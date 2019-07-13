@@ -8,4 +8,8 @@ class Note extends Model
 {
     //
     public $fillable = ['title', 'description'];
+
+    public function images(){
+        return $this->hasMany(NotesImage::class);
+    }
 }

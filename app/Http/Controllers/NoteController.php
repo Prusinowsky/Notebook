@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use App\NotesImage;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -40,7 +41,8 @@ class NoteController extends Controller
     }
 
     public function destroy(Note $note){
-      $note->delete();
-      return redirect('/');
+        $note->images()->delete();
+        $note->delete();
+        return redirect('/');
     }
 }

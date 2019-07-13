@@ -11,11 +11,11 @@
     @csrf
   <div class="form-group">
     <label for="title">Tytuł</label>
-    <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł notatki">
+    <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł notatki" value="{{ old('title') }}">
   </div>
   <div class="form-group">
     <label for="description">Treść notatki</label>
-    <textarea class="form-control" name="description" id="description" placeholder="Wpisz treść notatki" rows="15"></textarea>
+    <textarea class="form-control" name="description" id="description" placeholder="Wpisz treść notatki" rows="15">{{ old('description') }}</textarea>
   </div>
   @if($errors->any())
   <div class="alert alert-warning" role="alert">

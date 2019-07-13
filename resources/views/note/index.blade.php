@@ -13,6 +13,15 @@
       <div class="description">
         @markdown($note->description)
       </div>
+        @if($note->images->isNotEmpty())
+            <div class="row">
+                @foreach($note->images as $img)
+                    <div class="col-3">
+                        <a href="{{ $img->img_url }}"><img src="{{ $img->img_url }}" style="display: block; margin: 10px auto; width: 95%;" alt="" /></a>
+                    </div>
+                @endforeach
+            </div>
+        @endif
       <form class="form-field float-right" action="{{ url("note/".$note->id."/edit") }}" method="get" style="margin: 5px;">
         @csrf
         <input class="btn btn-success float-right" type="submit" value="Edytuj" />
