@@ -19,6 +19,8 @@
         </div>
         @unless (Auth::check())
             <a class="nav-item nav-link float-right" href="{{ url('/login') }}">Zaloguj się</a>
+        @else
+            <a class="nav-item nav-link float-right" href="{{ url('/home') }}">Zaplecze</a>
         @endunless
       </div>
 

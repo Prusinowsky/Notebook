@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Note;
 use App\NotesImage;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -13,11 +12,13 @@ class NotesImageController extends Controller
 {
     //
     public function upload(Note $note){
+        if($note->isNotAuthor()) abort(403);
         return view('note.upload', compact('note'));
     }
 
     public function store(Request $request, Note $note){
-       $request->validate([
+        if($note->isNotAuthor()) abort(403);
+        $request->validate([
             'image' => 'required|image|mimes:jpeg,jpg,png,gif'
         ]);
 
@@ -35,8 +36,11 @@ class NotesImageController extends Controller
     }
 
     public function download(Note $note){
-        $url = request(['image_url'])['image_url'];
-        $info = pathinfo($url);
+        if($note->isNotAuthor()) abort(403);
+
+        $url = Request()->validate([
+            'image_url' => 'required|url'
+        ])['image_url'];
         $contents = file_get_contents($url);
         $imageName = 'images/'.time().'.jpg';
         Storage::put($imageName, $contents);
@@ -52,7 +56,7 @@ class NotesImageController extends Controller
     }
 
     public function destroy(NotesImage $notesImage){
-        $notesImage->deleteFile();
+        if($notesImage->note()->isNotAuthor()) abort(403);
         $notesImage->delete();
         return back()->with('message', 'Zdjęcie zostało usunięte.');
     }
